@@ -4,9 +4,7 @@
   <img src="https://github.com/GopalVerma1303/Sowa/blob/32bc91bc06aa57d359a477bef0f05eccdb698adb/public/logo.png" alt="AutoForge Logo" height="300">
 </div>
 
-# Sowa
-
-Question answering system powered by a LLMs
+## Question answering system powered by LLMs
 
 <br />
 
