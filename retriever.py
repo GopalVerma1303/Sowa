@@ -1,5 +1,5 @@
 from langchain.retrievers import TFIDFRetriever
-from langchain.embeddings import OpenAIEmbeddings
+from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import Chroma
 
 
@@ -13,7 +13,7 @@ class Retriever:
         self.tfidf_retriever = TFIDFRetriever.from_documents(documents)
 
         # Initialize semantic retriever
-        embeddings = OpenAIEmbeddings()
+        embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
         vectorstore = Chroma.from_documents(documents, embeddings)
         self.semantic_retriever = vectorstore.as_retriever()
 

@@ -11,9 +11,11 @@ from qa_system import QASystem
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Set up API keys
-os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+# Set up API key
 os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
+
+# Set the path to the textbooks directory
+TEXTBOOKS_DIR = "textbooks"
 
 
 def main():
@@ -27,17 +29,23 @@ def main():
         rag_system = RAGSystem()
         qa_system = QASystem()
 
+        # Get list of PDF files in the textbooks directory
+        pdf_files = [f for f in os.listdir(TEXTBOOKS_DIR) if f.endswith(".pdf")]
+
         # Sidebar for textbook selection
         st.sidebar.header("Textbook Selection")
-        selected_textbooks = st.sidebar.multiselect(
-            "Select textbooks", ["Textbook 1", "Textbook 2", "Textbook 3"]
-        )
+        st.sidebar.write("Available textbooks:")
+        for pdf in pdf_files:
+            st.sidebar.write(f"- {pdf}")
+
+        selected_textbooks = st.sidebar.multiselect("Select textbooks", pdf_files)
 
         # Process selected textbooks
         if selected_textbooks:
             with st.spinner("Processing textbooks..."):
                 for textbook in selected_textbooks:
-                    content = textbook_processor.extract_content(textbook)
+                    file_path = os.path.join(TEXTBOOKS_DIR, textbook)
+                    content = textbook_processor.extract_content(file_path)
                     hierarchical_indexer.build_index(textbook, content)
 
             st.success("Textbooks processed and indexed successfully!")

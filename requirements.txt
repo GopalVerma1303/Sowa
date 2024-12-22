@@ -1,6 +1,7 @@
 streamlit
 PyPDF2
 langchain
+langchain_community
 chromadb
 sentence-transformers
 groq

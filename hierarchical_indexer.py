@@ -11,7 +11,7 @@ class HierarchicalIndexer:
             chunk_overlap=200,
             length_function=len,
         )
-        self.embeddings = HuggingFaceEmbeddings()
+        self.embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
         self.vector_store = None
 
     def build_index(self, textbook_name, content):
